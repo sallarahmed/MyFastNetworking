@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements MVP_Main.Required
   //  private RecyclerView recyclerView;
   //  private MyAdapter mAdapter;
     private MyListAdapter myListAdapter;
-
+    private MainPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +40,21 @@ public class MainActivity extends AppCompatActivity implements MVP_Main.Required
         AndroidNetworking.initialize(getApplicationContext());
         mContext = this;
        lv = findViewById(R.id.main_lv);
-        MainPresenter presenter = new MainPresenter(this);
+        presenter = new MainPresenter(this);
 
         MainModel model = new MainModel(presenter);
 
         presenter.setModel(model);
 
         presenter.setView(this);
+
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy(isChangingConfigurations());
 
     }
 

@@ -1,6 +1,7 @@
 package com.sallar.myfastnetworking.presenter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -13,12 +14,13 @@ import com.sallar.myfastnetworking.view.MyListAdapter;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import static com.sallar.myfastnetworking.model.MainModel.TAG;
+
 public class MainPresenter implements MVP_Main.ProvidedPresenterOps , MVP_Main.RequiredPresenterOps {
 
     private WeakReference <MVP_Main.RequiredViewOps> mView;
     // Model reference
     private MVP_Main.ProvidedModelOps mModel;
-    MyListAdapter adapter;
 
     //MainModel mainModel = new  MainModel(this);
 
@@ -32,8 +34,10 @@ public class MainPresenter implements MVP_Main.ProvidedPresenterOps , MVP_Main.R
 
     public void setModel(MVP_Main.ProvidedModelOps model) {
         mModel = model;
-        mModel.loadData();
 
+       boolean b = mModel.loadData();
+
+        Log.d(TAG, "Data Loaded: "+ b);
     }
 
     public ArrayAdapter setAdapter(List<POJO> pojo){
